@@ -1,12 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="au.com.leddevelopment.dealer" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>FuckTheDealer</name>
+    <name>Fuck The Dealer</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        An App that lets users play the drinking game "Fuck The Dealer"
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="admin@leddevelopment.com.au" href="http://leddevelopment.com.au">
+        LedDevelopment
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <preference name="Fullscreen" value="true" />
 </widget>
