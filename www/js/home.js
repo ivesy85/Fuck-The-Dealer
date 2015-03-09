@@ -13,7 +13,8 @@ $(document).ready(function(){
             type: 'POST',
             success: function(response){
                 if(response['success']){
-                    window.location.href = '../game.html?game_id='+response['game']['Game']['id'];
+                    localStorage.current_game = JSON.stringify(response['game']);
+                    window.location.href = 'game.html';
                 } else if(response['logged_in'] == false){
                     navigator.notification.alert('AH FUCK! You\'ve been logged out.',
                         function(){
@@ -53,20 +54,19 @@ function findGames(){
                         status = '<span class="label label-info">In Progress</span>';
                     }
                     html +=
-                        '<div id="gamesDiv">'+
+                        '<div class="row">'+
                             '<div class="col-xs-6">'+
                                 '<strong>Game Owner</strong><br>'+
                                 game['Owner']['username']+
                             '</div>'+
                             '<div class="col-xs-6 text-right">'+
                                 status+
-                                '<br>'+game['number_of_games']+' Players joined'+
+                                '<br>'+game['number_of_games']+' Players'+
                             '</div>'+
-                            '<div class="row divider"></div>'+
-                        '</div>';
+                        '</div><hr>';
                 });
 
-                $('#active_games_div').empty().append(html);
+                $('#gamesDiv').empty().append(html);
             } else {
                 navigator.notification.alert('This cunt of an app has fucked you. If you want the vaginal warts, try again..',
                     function(){}, 'Clammy Vaginal Warts have appeared!', 'Ok');
@@ -77,7 +77,7 @@ function findGames(){
                 function(){}, 'Error', 'Ok');
         },
         complete: function(){
-            btn.removeClass('disabled').html('Create Game');
+            //btn.removeClass('disabled').html('Create Game');
         }
     });
 }
