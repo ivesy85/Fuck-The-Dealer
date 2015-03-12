@@ -67,7 +67,8 @@ function loadLogin(){
                             function(){}, 'Error', 'Dismiss');
                     }
                 },
-                error: function () {
+                error: function (e) {
+                    console.log(e);
                     //Activate modal and display message
                     navigator.notification.alert('GET SOME FUCKN INTERNET YOU DIRTY NIGGA',
                         function(){}, 'Error', 'Ok');
@@ -94,15 +95,18 @@ function confirmSubmission(btnIndex){
             data: data,
             dataType: 'json',
             success: function (response) {
+                console.log(response);
                 if(response['success']){
-                    window.location.href = 'html/home.html';
+                    //Activate modal and display message
+                    $('#login_btn').trigger('click');
                 } else {
                     //Activate modal and display message
                     navigator.notification.alert('Oh cunt thats wrong! Nicks not gonna get drunk with that bullshit!',
                         function(){}, 'Error', 'Dismiss');
                 }
             },
-            error: function (jqXHR, textStatus, errorThrown) {
+            error: function (e) {
+                console.log(e);
                 //Activate modal and display message
                 navigator.notification.alert('An error has occurred. Please check your internet connection and try again.',
                     function(){}, 'Error', 'Ok');
