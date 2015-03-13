@@ -67,7 +67,8 @@ function loadLogin(){
                             function(){}, 'Error', 'Dismiss');
                     }
                 },
-                error: function () {
+                error: function (e) {
+                    console.log(e);
                     //Activate modal and display message
                     navigator.notification.alert('GET SOME FUCKN INTERNET YOU DIRTY NIGGA',
                         function(){}, 'Error', 'Ok');
@@ -102,7 +103,8 @@ function confirmSubmission(btnIndex){
                         function(){}, 'Error', 'Dismiss');
                 }
             },
-            error: function (jqXHR, textStatus, errorThrown) {
+            error: function (e) {
+                console.log(e);
                 //Activate modal and display message
                 navigator.notification.alert('An error has occurred. Please check your internet connection and try again.',
                     function(){}, 'Error', 'Ok');
@@ -115,3 +117,4 @@ function confirmSubmission(btnIndex){
         login_button.removeClass('disabled').html('Login');
     }
 }
+
