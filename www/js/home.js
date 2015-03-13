@@ -71,43 +71,47 @@ function findGames(){
         type: 'GET',
         success: function(response){
             if(response['success']){
-                var html = '';
+                if(response['in_game'] == false){
+                    var html = '';
 
-                $.each(response['games'], function(index, game){
-                    var status = '';
+                    $.each(response['games'], function(index, game){
+                        var status = '';
 
-                    if(game['Game']['status'] == 1){
-                        if(game['owned']){
-                            status = '<button class="btn btn-xs btn-default start_game" game_id="'+game['Game']['id']+'">Start Game</button>';
-                        } else if(game['joined']){
-                            status = '<span class="label label-warning">Waiting for Players</span>';
-                        } else {
-                            status = '<button class="btn btn-warning btn-xs join_game" game_id="'+game['Game']['id']+'">Join Game</button>';
+                        if(game['Game']['status'] == 1){
+                            if(game['owned']){
+                                status = '<button class="btn btn-xs btn-default start_game" game_id="'+game['Game']['id']+'">Start Game</button>';
+                            } else if(game['joined']){
+                                status = '<span class="label label-warning">Waiting for Players</span>';
+                            } else {
+                                status = '<button class="btn btn-warning btn-xs join_game" game_id="'+game['Game']['id']+'">Join Game</button>';
+                            }
+                        } else if(game['Game']['status'] == 2){
+                            status = '<span class="label label-info">In Progress</span>';
                         }
-                    } else if(game['Game']['status'] == 2){
-                        status = '<span class="label label-info">In Progress</span>';
-                    }
-                    html +=
-                        '<div class="row">'+
+                        html +=
+                            '<div class="row">'+
                             '<div class="col-xs-6">'+
-                                '<strong>Game Owner</strong><br>'+
-                                game['Owner']['username']+
+                            '<strong>Game Owner</strong><br>'+
+                            game['Owner']['username']+
                             '</div>'+
                             '<div class="col-xs-6 text-right">'+
-                                status+
-                                '<br>'+game['number_of_players']+' Player(s)'+
+                            status+
+                            '<br>'+game['number_of_players']+' Player(s)'+
                             '</div>'+
-                        '</div><hr>';
-                });
+                            '</div><hr>';
+                    });
 
-                $('#gamesDiv').empty().append(html);
+                    $('#gamesDiv').empty().append(html);
 
-                $('.join_game').unbind('click').bind('click',function(){
-                    joinGame($(this));
-                });
-                $('.start_game').unbind('click').bind('click',function(){
-                    startGame($(this));
-                });
+                    $('.join_game').unbind('click').bind('click',function(){
+                        joinGame($(this));
+                    });
+                    $('.start_game').unbind('click').bind('click',function(){
+                        startGame($(this));
+                    });
+                } else {
+                    window.location.href = 'game.html';
+                }
             } else {
                 navigator.notification.alert('This cunt of an app has fucked you. If you want the vaginal warts, try again..',
                     function(){}, 'Clammy Vaginal Warts have appeared!', 'Ok');

@@ -38,16 +38,16 @@ function findGame(){
 }
 
 function setupGame(){
-    checkTurn();
+    check();
 
     setInterval(function(){
-        checkTurn();
+        check();
     }, 5000);
 }
 
-function checkTurn(){
+function check(){
     $.ajax({
-        url: globalURL+'Games/checkTurn',
+        url: globalURL+'Games/checkDealer',
         dataType: 'json',
         type: 'POST',
         data: {
@@ -60,11 +60,19 @@ function checkTurn(){
                         window.location.href = '../index.html';
                     }, 'Mother Fuck!', 'Ok');
             } else if(response['success']) {
-                if (response['your_turn']) {
-                    window.location.href = 'turn.html';
-                } else if (response['dealer']) {
-                    window.location.href = 'dealer.html';
+                console.log(response);
+                //Update number
+                if(response['dealer']){
+                    $('#card_div').html(response['current_card']['Card']['name']);
+                    $('#number_turn').html('<label class="label label-info">'+response['incorrect_guesses']+' Incorrect Guesses</label>');
+                } else {
+                    window.location.href = 'game.html';
                 }
+            } else if(response['over']) {
+                navigator.notification.alert('Game Over MAN',
+                    function(){
+                        window.location.href = 'home.html';
+                    }, 'Do a shot', 'Ok');
             } else {
                 navigator.notification.alert('This cunt of an app has fucked you. If you want the vaginal warts, try again..',
                     function(){}, 'Clammy Vaginal Warts have appeared!', 'Ok');
